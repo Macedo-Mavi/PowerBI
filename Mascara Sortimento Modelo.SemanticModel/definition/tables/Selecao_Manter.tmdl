@@ -1,0 +1,64 @@
+table Selecao_Manter
+	lineageTag: c0d3636a-c6e1-4997-bf02-ae404f841104
+
+	measure Filtro_MANTER = ```
+			
+			VAR StatusSelecionado = SELECTEDVALUE(Selecao_Manter[Selecao_Manter Campos], "MANTER")
+			RETURN 
+			IF(
+			    StatusSelecionado = "MANTER" && [IS_MANTER]="MANTER", 1,
+			    IF(
+			    StatusSelecionado = "REVISAR" && [IS_MANTER]="REVISAR", 1,
+			    IF(
+			    StatusSelecionado = "TODOS",1,
+			    0
+			)))
+			```
+		formatString: 0
+		lineageTag: 5846c82f-05fc-4b34-aec8-e256d6f4bb14
+
+	column Selecao_Manter
+		lineageTag: 67be4008-16fd-476e-ac40-9ac7b643271f
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Selecao_Manter Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Selecao_Manter Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Selecao_Manter Campos'
+		lineageTag: 252e5a60-6705-4a6d-9a3a-07a481b39c66
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Selecao_Manter Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Selecao_Manter Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: 8089a68d-7d4b-4b51-b7ff-47e12eb62742
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Selecao_Manter = calculated
+		mode: import
+		source =
+				{
+				    ("MANTER", "MANTER", 1),
+				    ("REVISAR", "REVISAR", 2),
+				    ("TODOS", "TODOS",0)
+				}
+
+	annotation PBI_Id = 0e42df18c2de4bc4bd8275222c77d013
+

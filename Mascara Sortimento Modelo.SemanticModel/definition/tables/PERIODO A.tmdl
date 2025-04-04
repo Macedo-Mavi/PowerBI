@@ -1,0 +1,56 @@
+table 'PERIODO A'
+	lineageTag: 2a31271d-b6d2-4644-81ab-c2d5a977bd87
+
+	column 'data a'
+		formatString: General Date
+		lineageTag: 7a90a701-133f-45ae-bf84-f06049942ce5
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 78607d6b-c77e-4a68-8b44-abdbff4ab66a
+			defaultHierarchy: LocalDateTable_25aaf173-5154-4d0c-a7bc-2936b9d3a0f2.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano_a = 'PERIODO A'[data a].[Ano]
+		formatString: 0
+		lineageTag: 23d04798-4f45-4846-9b22-3148d1bd0d3f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_a = 'PERIODO A'[data a].[MonthNo]
+		formatString: 0
+		lineageTag: 7476115a-bc19-4ce4-93bb-9eb0fdcb0670
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_mes_a = 'PERIODO A'[data a].[Mês]
+		lineageTag: f9ee113a-849a-4325-8f35-f5ea70b359c2
+		summarizeBy: none
+		sortByColumn: mes_a
+
+		changedProperty = FormatString
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_a_final = [mes_a]&"-"&[nome_mes_a]
+		lineageTag: c454a7bc-db54-4771-b782-f39bc8384a76
+		summarizeBy: none
+		sortByColumn: mes_a
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PERIODO A' = calculated
+		mode: import
+		source = CALENDAR(MIN(mavi_prod_lj[dia]),max(mavi_prod_lj[dia]))
+
+	annotation PBI_Id = 408bcd43c7af4ad9abf47a262cf555ea
+

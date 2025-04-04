@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Mascara Sortimento Modelo"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8ed9527d-d3db-42e1-8064-b9f7b9608d98"
+  }
+}

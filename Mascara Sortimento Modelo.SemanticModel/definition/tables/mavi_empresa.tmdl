@@ -1,0 +1,33 @@
+table mavi_empresa
+	lineageTag: 589a2092-fac3-4c38-88f9-20f7c581c909
+
+	column cod_empresa
+		dataType: int64
+		formatString: 0
+		lineageTag: f542ce5e-abc6-4563-8be0-a9790f7dad74
+		summarizeBy: none
+		sourceColumn: cod_empresa
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_empresa
+		dataType: string
+		lineageTag: d9b81c4d-b218-47f7-943a-67f694ac1c54
+		summarizeBy: none
+		sourceColumn: nome_empresa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mavi_empresa = m
+		mode: import
+		source =
+				let
+				    Fonte = MySQL.Database("162.214.169.214", "mavi_unilever_personal_care", [ReturnSingleDatabase=true]),
+				    mavi_unilever_personal_care_empresa = Fonte{[Schema="mavi_unilever_personal_care",Item="empresa"]}[Data]
+				in
+				    mavi_unilever_personal_care_empresa
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

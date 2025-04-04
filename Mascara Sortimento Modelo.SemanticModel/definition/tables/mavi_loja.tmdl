@@ -1,0 +1,268 @@
+table mavi_loja
+	lineageTag: bfc019d5-4aa4-4a2d-a43d-6220321b92b4
+
+	column cod_loja
+		dataType: int64
+		formatString: 0
+		lineageTag: b399ab61-837f-48b8-aa2f-7ab0715c5992
+		summarizeBy: none
+		sourceColumn: cod_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_varejista
+		dataType: int64
+		formatString: 0
+		lineageTag: f1bf3b0a-4b86-443d-9447-40b7874117fb
+		summarizeBy: none
+		sourceColumn: cod_varejista
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_empresa
+		dataType: int64
+		formatString: 0
+		lineageTag: 97d12ad3-3275-44c1-9d16-8abf5ff63f10
+		summarizeBy: none
+		sourceColumn: cod_empresa
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_loja
+		dataType: int64
+		formatString: 0
+		lineageTag: d6e58ef4-6d1d-4146-b3c2-1ae98bc605e5
+		summarizeBy: sum
+		sourceColumn: id_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column ref_nome_varejista
+		dataType: string
+		lineageTag: 2194180e-e33d-41dc-8743-3444a7b64646
+		summarizeBy: none
+		sourceColumn: ref_nome_varejista
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_loja
+		dataType: string
+		lineageTag: 5ec048f8-d539-4e60-9866-89972f676c76
+		summarizeBy: none
+		sourceColumn: nome_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column regiao_loja
+		dataType: string
+		lineageTag: b4db97d2-0411-4c67-867b-ec96b95e69be
+		summarizeBy: none
+		sourceColumn: regiao_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column tamanho
+		dataType: string
+		lineageTag: 369372e3-1efc-49e6-b0d5-11bf3cf94b55
+		summarizeBy: none
+		sourceColumn: tamanho
+
+		annotation SummarizationSetBy = Automatic
+
+	column social_loja
+		dataType: string
+		lineageTag: b55065f6-c2a3-44bd-b8ce-8201017c958b
+		summarizeBy: none
+		sourceColumn: social_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_loja
+		dataType: string
+		lineageTag: 1bb73c77-d391-4a63-906c-e8bf1c88661f
+		summarizeBy: none
+		sourceColumn: cluster_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column area_loja
+		dataType: string
+		lineageTag: 2173bd9e-3fac-415f-8f44-4ad25f6313e0
+		summarizeBy: none
+		sourceColumn: area_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column estado_loja
+		dataType: string
+		lineageTag: 15361b69-8b0e-4616-8218-c154bc509a5e
+		summarizeBy: none
+		sourceColumn: estado_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column estado_desc_loja
+		dataType: string
+		lineageTag: 51727534-d6e1-42fc-bc69-f8563b67de88
+		summarizeBy: none
+		sourceColumn: estado_desc_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column bandeira_loja
+		dataType: string
+		lineageTag: 8b11d75d-8b1a-4217-917b-6ed90ef84531
+		summarizeBy: none
+		sourceColumn: bandeira_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column canal_loja
+		dataType: string
+		lineageTag: fd0308bd-72fd-4da9-8a97-51bbfba36bac
+		summarizeBy: none
+		sourceColumn: canal_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column formato_loja
+		dataType: string
+		lineageTag: 234289be-b60c-4c6f-839f-4a71b8886369
+		summarizeBy: none
+		sourceColumn: formato_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column cidade_loja
+		dataType: string
+		lineageTag: 8c53ad8d-3c5f-4e16-a248-27c6449a8f95
+		summarizeBy: none
+		sourceColumn: cidade_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column endereco_loja
+		dataType: string
+		lineageTag: 8cd6d95a-feef-4aa9-bbcb-6b9509f5189f
+		summarizeBy: none
+		sourceColumn: endereco_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column setor_loja
+		dataType: string
+		lineageTag: efe5dc4b-b864-4e7e-9431-48feedf36c76
+		summarizeBy: none
+		sourceColumn: setor_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column canal_nielsen
+		dataType: string
+		lineageTag: 5e91cd81-dba8-4029-b226-0b068a30339f
+		summarizeBy: none
+		sourceColumn: canal_nielsen
+
+		annotation SummarizationSetBy = Automatic
+
+	column formato_nielsen
+		dataType: string
+		lineageTag: 7d086e74-d023-462f-b014-995e6512633f
+		summarizeBy: none
+		sourceColumn: formato_nielsen
+
+		annotation SummarizationSetBy = Automatic
+
+	column regiao_nielsen
+		dataType: string
+		lineageTag: 1c9b982a-06b3-4d70-b340-b856b946ca3c
+		summarizeBy: none
+		sourceColumn: regiao_nielsen
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_1
+		dataType: string
+		lineageTag: 660f560b-d76b-4c5a-90de-9c56c032d967
+		summarizeBy: none
+		sourceColumn: cluster_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_2
+		dataType: string
+		lineageTag: 073608d9-9bc6-434b-9679-e820829362f4
+		summarizeBy: none
+		sourceColumn: cluster_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_3
+		dataType: string
+		lineageTag: 5e4d0de9-d065-411b-b539-0bbf95a63e2e
+		summarizeBy: none
+		sourceColumn: cluster_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_4
+		dataType: string
+		lineageTag: 940dab62-758e-41f5-b6e2-037d64f62c1d
+		summarizeBy: none
+		sourceColumn: cluster_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_5
+		dataType: string
+		lineageTag: e6b614f1-00c4-4507-8c9c-aa9fc4a95320
+		summarizeBy: none
+		sourceColumn: cluster_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_6
+		dataType: string
+		lineageTag: 315ff796-01d8-417f-8f28-974804b7c24d
+		summarizeBy: none
+		sourceColumn: cluster_6
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_7
+		dataType: string
+		lineageTag: 78942fab-c129-4111-9db3-07e22c22da43
+		summarizeBy: none
+		sourceColumn: cluster_7
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_8
+		dataType: string
+		lineageTag: 43d545d3-71ef-48a9-bd6f-e352b0dc7384
+		summarizeBy: none
+		sourceColumn: cluster_8
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_9
+		dataType: string
+		lineageTag: 09ac53bf-eed5-4404-b856-9cbb4a05dff5
+		summarizeBy: none
+		sourceColumn: cluster_9
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mavi_loja = m
+		mode: import
+		source =
+				let
+				    Fonte = MySQL.Database("162.214.169.214", "mavi_unilever_personal_care", [ReturnSingleDatabase=true]),
+				    mavi_unilever_personal_care_loja = Fonte{[Schema="mavi_unilever_personal_care",Item="loja"]}[Data]
+				in
+				    mavi_unilever_personal_care_loja
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

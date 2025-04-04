@@ -1,0 +1,55 @@
+table 'Selecao de Medidas'
+	lineageTag: 801d556b-e592-4da0-bc3f-95b166320a56
+
+	measure _MEDIDA_CHAVE =
+			
+			SWITCH(TRUE(),
+			'Selecao de Medidas'[medidas selecionada]="Valor",_Formulas[VALOR],
+			'Selecao de Medidas'[medidas selecionada]="Quantidade",[QUANTIDADE])
+			//medida chave)))))
+		displayFolder: _Medida X
+		lineageTag: 158c3416-be4a-4393-b8fa-a6105b6a5290
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'medidas selecionada' =
+			
+			SELECTEDVALUE('Selecao de Medidas'[MEDIDAS],"VALOR")
+		lineageTag: 596af66c-4253-4e5f-979a-ae5053a19dc8
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: aafdc1df-c221-419d-b15d-6e1714688c4b
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column MEDIDAS
+		dataType: string
+		lineageTag: b7b0a13e-46d9-4e74-a720-2b3df3b70b6d
+		summarizeBy: none
+		sourceColumn: MEDIDAS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Selecao de Medidas' = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUQpz9PEPUorViVYyAvICQx39QjxdHF1clWJjAQ==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ID = _t, MEDIDAS = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"ID", Int64.Type}, {"MEDIDAS", type text}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado",{{"MEDIDAS", "MEDIDAS1"}}),
+				    Personalizar1 = Table.InsertRows(#"Colunas Renomeadas",2,{[#"ID"=3,#"MEDIDAS1"="VOLUME"]}),
+				    #"Colunas Renomeadas1" = Table.RenameColumns(Personalizar1,{{"MEDIDAS1", "MEDIDAS"}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Colunas Renomeadas1", each ([ID] <> 3))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

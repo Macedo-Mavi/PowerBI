@@ -1,0 +1,80 @@
+table Selecao_Ativo
+	lineageTag: 1ecab184-9486-41ac-8a35-c1148658a76f
+
+	measure Filtro_Ativo = ```
+			
+			VAR StatusSelecionado = SELECTEDVALUE(Selecao_Ativo[Selecao_Ativo Campos], "Ativo")
+			RETURN 
+			IF(
+			    StatusSelecionado = "Ativo" && NOT ISBLANK([MEDIA_ANO_2_VAL]), 1,
+			    IF(
+			    StatusSelecionado = "Inativo" && ISBLANK([MEDIA_ANO_2_VAL]), 1,
+			    IF(
+			    StatusSelecionado = "Todos", 1,
+			    0
+			)))
+			```
+		formatString: 0
+		lineageTag: bbc80d5a-c612-43b3-9111-00814adf91a4
+
+	measure Filtro_Ativo_M = ```
+			
+			VAR StatusSelecionado = SELECTEDVALUE(Selecao_Ativo[Selecao_Ativo Campos], "Ativo")
+			RETURN 
+			IF(
+			    StatusSelecionado = "Ativo" && NOT ISBLANK([MEDIA_ANO_2_VAL_M]), 1,
+			    IF(
+			    StatusSelecionado = "Inativo" && ISBLANK([MEDIA_ANO_2_VAL_M]), 1,
+			    IF(
+			    StatusSelecionado = "Todos", 1,
+			    0
+			)))
+			```
+		formatString: 0
+		lineageTag: 8f36cb34-ba34-4018-b749-430568192b75
+
+	column Selecao_Ativo
+		lineageTag: 1f4975ad-d751-4181-804f-c8563ef1f554
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Selecao_Ativo Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Selecao_Ativo Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Selecao_Ativo Campos'
+		lineageTag: 1214a9fc-d2a9-4b53-a554-510733dd05a9
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Selecao_Ativo Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Selecao_Ativo Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: 63ddc2cf-8c0d-44e7-915e-6bef6bcebff3
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Selecao_Ativo = calculated
+		mode: import
+		source =
+				{
+				    ("Ativo", "Ativo", 1),
+				    ("Inativo", "Inativo", 2),
+				    ("Todos", "Todos", 0)
+				}
+
+	annotation PBI_Id = 1256e1a80fcb4d1da4008e0445413b5e
+

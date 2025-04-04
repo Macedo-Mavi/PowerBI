@@ -1,0 +1,143 @@
+table mavi_prod_lj
+	lineageTag: c767be64-30f8-4646-958e-ccd1df82c19d
+
+	column cod_prod_lj
+		dataType: int64
+		formatString: 0
+		lineageTag: ffec3832-997b-4182-83c3-3a1a8ee53800
+		summarizeBy: sum
+		sourceColumn: cod_prod_lj
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_loja
+		dataType: int64
+		formatString: 0
+		lineageTag: c627f474-05ee-4768-871f-06ca399297b0
+		summarizeBy: none
+		sourceColumn: cod_loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_produto
+		dataType: int64
+		formatString: 0
+		lineageTag: c035026a-b179-4ebc-a0d2-3db43d6adcff
+		summarizeBy: none
+		sourceColumn: cod_produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column ref_varejista
+		dataType: string
+		lineageTag: 67384f75-81fd-4c23-a050-6e80832bbdbd
+		summarizeBy: none
+		sourceColumn: ref_varejista
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7bd7084b-6d19-4306-9117-6f55ab9d4893
+		summarizeBy: none
+		sourceColumn: dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: string
+		lineageTag: c4be217c-4d1c-49eb-98c5-ff03aab92a42
+		summarizeBy: none
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column decr_mes
+		dataType: string
+		lineageTag: 0ae4fa25-969b-4d2d-a041-33c32a0a3b16
+		summarizeBy: none
+		sourceColumn: decr_mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 109c24cd-6662-485a-9852-61afbd6a2df0
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column periodo
+		dataType: string
+		lineageTag: bd532aa4-72a5-43c7-9c63-b3522cc8259c
+		summarizeBy: none
+		sourceColumn: periodo
+
+		annotation SummarizationSetBy = Automatic
+
+	column valor
+		dataType: double
+		lineageTag: 02e0f383-b33a-44c6-8c6a-4c6ac2252471
+		summarizeBy: sum
+		sourceColumn: valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column quantidade
+		dataType: double
+		lineageTag: d113b80a-e80d-4da0-b2b7-08e2af07f32f
+		summarizeBy: sum
+		sourceColumn: quantidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column indicador3
+		dataType: double
+		lineageTag: 4c2fdb22-8fbf-4a9b-8aa7-5000ce630215
+		summarizeBy: sum
+		sourceColumn: indicador3
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'mavi_produto.cod_categoria'
+		dataType: int64
+		formatString: 0
+		lineageTag: b5e0c90f-5654-4cf7-82a0-d324227b0db5
+		summarizeBy: sum
+		sourceColumn: mavi_produto.cod_categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column concat_data = CONCATENATE(CONCATENATE(mavi_prod_lj[ano]," - "),mavi_prod_lj[decr_mes])
+		lineageTag: 78e96122-0bbb-4bd4-92d9-b475013282df
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mavi_prod_lj = m
+		mode: import
+		source =
+				let
+				    Fonte = MySQL.Database("162.214.169.214", "mavi_unilever_personal_care", [ReturnSingleDatabase=true]),
+				    mavi_unilever_personal_care_prod_lj = Fonte{[Schema="mavi_unilever_personal_care",Item="prod_lj"]}[Data],
+				    #"Colunas Removidas" = Table.RemoveColumns(mavi_unilever_personal_care_prod_lj,{"dia_detalhado", "semana", "trimestre", "indicador4", "indicador5", "indicador6", "indicador7", "indicador8", "indicador9", "periodo2"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Colunas Removidas", each ([ano] <> 2022) and ([ref_varejista] <> "CONDOR" and [ref_varejista] <> "MUFFATO" and [ref_varejista] <> "PANVEL" and [ref_varejista] <> "RD" and [ref_varejista] <> "SAVEGNAGO")),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Linhas Filtradas", {"cod_produto"}, mavi_produto, {"cod_produto"}, "mavi_produto", JoinKind.LeftOuter),
+				    #"mavi_produto Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "mavi_produto", {"cod_categoria"}, {"mavi_produto.cod_categoria"}),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"mavi_produto Expandido", each true)
+				in
+				    #"Linhas Filtradas1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

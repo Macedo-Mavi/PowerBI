@@ -1,0 +1,311 @@
+table mavi_produto
+	lineageTag: e14b345b-4077-4ec0-ab4c-3f24aeb9bf27
+
+	column cod_produto
+		dataType: int64
+		formatString: 0
+		lineageTag: ce998232-5364-4be4-b932-6a44cdc0b471
+		summarizeBy: none
+		sourceColumn: cod_produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_categoria
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a0bfb1e-77c3-41db-8bc1-b472bb01dfdf
+		summarizeBy: none
+		sourceColumn: cod_categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column ean
+		dataType: string
+		lineageTag: 5b38a517-855b-481f-a1d5-fcb32691cddf
+		summarizeBy: none
+		sourceColumn: ean
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column plu
+		dataType: int64
+		formatString: 0
+		lineageTag: 189ea7c8-0103-4a51-b0c9-13f5eb459e49
+		summarizeBy: sum
+		sourceColumn: plu
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_produto
+		dataType: string
+		lineageTag: a4509403-e0b8-44a5-8e43-8253cde44b3d
+		summarizeBy: none
+		sourceColumn: nome_produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column setor_gerenciado
+		dataType: string
+		lineageTag: 1d1149c9-feb5-4267-b0fb-cba3d1f05481
+		summarizeBy: none
+		sourceColumn: setor_gerenciado
+
+		annotation SummarizationSetBy = Automatic
+
+	column setor_produto
+		dataType: string
+		lineageTag: 4494f8fa-b3bd-43f6-978a-bc2c1f32fddf
+		summarizeBy: none
+		sourceColumn: setor_produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_categoria
+		dataType: string
+		lineageTag: 3b93e353-bea2-4362-bead-ccc031c68b17
+		summarizeBy: none
+		sourceColumn: sub_categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmento
+		dataType: string
+		lineageTag: 85993103-73ce-4617-8a16-af9e20385306
+		summarizeBy: none
+		sourceColumn: segmento
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_segmento
+		dataType: string
+		lineageTag: 3dea7e9b-d2da-4b7b-87a8-d9be3f1df037
+		summarizeBy: none
+		sourceColumn: sub_segmento
+
+		annotation SummarizationSetBy = Automatic
+
+	column fabricante
+		dataType: string
+		lineageTag: 6e097eae-4e7a-4bc4-804f-41de7ebfe7b0
+		summarizeBy: none
+		sourceColumn: fabricante
+
+		annotation SummarizationSetBy = Automatic
+
+	column fabricante_varejista
+		dataType: string
+		lineageTag: 3236eccb-138d-4433-b3a4-e8aa095c3015
+		summarizeBy: none
+		sourceColumn: fabricante_varejista
+
+		annotation SummarizationSetBy = Automatic
+
+	column marca
+		dataType: string
+		lineageTag: 3527a67f-5185-4449-9501-7e08e61edb62
+		summarizeBy: none
+		sourceColumn: marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column marca_verejista
+		dataType: string
+		lineageTag: 4884a215-9bce-4cb2-b6cf-f2a9349b76c3
+		summarizeBy: none
+		sourceColumn: marca_verejista
+
+		annotation SummarizationSetBy = Automatic
+
+	column marca_res
+		dataType: string
+		lineageTag: 281593a2-5db6-4751-98c2-cd98ce52d02e
+		summarizeBy: none
+		sourceColumn: marca_res
+
+		annotation SummarizationSetBy = Automatic
+
+	column marca_detalhada
+		dataType: string
+		lineageTag: 93b3ddd6-2371-40ca-ae89-81a1d2175a36
+		summarizeBy: none
+		sourceColumn: marca_detalhada
+
+		annotation SummarizationSetBy = Automatic
+
+	column atributo
+		dataType: string
+		lineageTag: 7736a660-db65-454f-8ce8-cd0d3f36345f
+		summarizeBy: none
+		sourceColumn: atributo
+
+		annotation SummarizationSetBy = Automatic
+
+	column embalagem
+		dataType: string
+		lineageTag: 43756d50-eaa6-4de0-a742-767f6314d6b3
+		summarizeBy: none
+		sourceColumn: embalagem
+
+		annotation SummarizationSetBy = Automatic
+
+	column unid_medida
+		dataType: string
+		lineageTag: d177a898-3a2a-42e0-901c-b5e928580705
+		summarizeBy: none
+		sourceColumn: unid_medida
+
+		annotation SummarizationSetBy = Automatic
+
+	column tamanho_produto
+		dataType: double
+		lineageTag: 55130bab-8c41-46e8-9a60-0ba13de55a8d
+		summarizeBy: sum
+		sourceColumn: tamanho_produto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tamanho_total
+		dataType: double
+		lineageTag: 2e78b751-9c95-4d9c-a3e5-586b30739345
+		summarizeBy: sum
+		sourceColumn: tamanho_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tamanho_range
+		dataType: string
+		lineageTag: 0b2b973b-24cb-407b-8d9d-ae53d00f55d2
+		summarizeBy: none
+		sourceColumn: tamanho_range
+
+		annotation SummarizationSetBy = Automatic
+
+	column se_oferta
+		dataType: string
+		lineageTag: 4651a68c-b14e-411f-9436-ae7cc6191698
+		summarizeBy: none
+		sourceColumn: se_oferta
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtd_itens
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ea339ac-70f4-444d-9ed6-f984e9f708ab
+		summarizeBy: sum
+		sourceColumn: qtd_itens
+
+		annotation SummarizationSetBy = Automatic
+
+	column dcr_oferta
+		dataType: string
+		lineageTag: 0b9c9eac-3201-4bf9-890b-0a2ba7089053
+		summarizeBy: none
+		sourceColumn: dcr_oferta
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_a
+		dataType: string
+		lineageTag: cc5360f4-c4a8-43ac-b566-4baea5e228fa
+		summarizeBy: none
+		sourceColumn: desc_a
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_b
+		dataType: string
+		lineageTag: 7f8efad7-e3be-4bd6-a5fe-c26802db9b15
+		summarizeBy: none
+		sourceColumn: desc_b
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_c
+		dataType: string
+		lineageTag: a629b544-730d-4938-8d64-ccd2f3b1c604
+		summarizeBy: none
+		sourceColumn: desc_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_d
+		dataType: string
+		lineageTag: 8cbea806-6ef3-421d-b840-c02a596ae79f
+		summarizeBy: none
+		sourceColumn: desc_d
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_e
+		dataType: string
+		lineageTag: 1e57492a-2dcb-44f7-a719-e8490c2e3913
+		summarizeBy: none
+		sourceColumn: desc_e
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_f
+		dataType: string
+		lineageTag: db629581-423c-400d-935c-bf817afe758b
+		summarizeBy: none
+		sourceColumn: desc_f
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_g
+		dataType: string
+		lineageTag: 4ebb64b3-c8f8-4b16-9a4b-e869f569963d
+		summarizeBy: none
+		sourceColumn: desc_g
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_h
+		dataType: string
+		lineageTag: 271b89e4-3d24-4165-885b-8e78a85b9717
+		summarizeBy: none
+		sourceColumn: desc_h
+
+		annotation SummarizationSetBy = Automatic
+
+	column Concat_EAN_NOME = mavi_produto[cod_produto] & " * " & mavi_produto[nome_produto]
+		lineageTag: 659d7e2f-aef3-4625-9f67-de34e24620e5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tamanho_ranges =
+			SWITCH(TRUE(),
+			AND(mavi_produto[tamanho_total]>=200,mavi_produto[tamanho_total]<=269), "200 A 269",
+			AND(mavi_produto[tamanho_total]>=310,mavi_produto[tamanho_total]<=355), "310 A 355",
+			AND(mavi_produto[tamanho_total]>=360,mavi_produto[tamanho_total]<=999), "360 ACIMA",
+			AND(mavi_produto[tamanho_total]>=1000,mavi_produto[tamanho_total]<=1500), "1000 A 1500",
+			AND(mavi_produto[tamanho_total]>=2000,mavi_produto[tamanho_total]<=2250), "2000 A 2250",
+			mavi_produto[tamanho_total]>=2500, "2500 ACIMA"
+			)
+		lineageTag: f1d4969d-0295-4179-ab85-ee1393d9dfbe
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mavi_produto = m
+		mode: import
+		source =
+				let
+				    Fonte = MySQL.Database("162.214.169.214", "mavi_unilever_personal_care", [ReturnSingleDatabase=true]),
+				    mavi_unilever_personal_care_produto = Fonte{[Schema="mavi_unilever_personal_care",Item="produto"]}[Data],
+				    #"Linhas Filtradas" = Table.SelectRows(mavi_unilever_personal_care_produto, each ([cod_categoria] = 1))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

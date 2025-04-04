@@ -1,0 +1,44 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["mavi_categoria","mavi_empresa","mavi_loja","mavi_produto","mavi_varejista","_Formulas","Selecao de Medidas","mavi_prod_lj"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.141.1253.0 (25.03)+74f9999a1e95f78c739f3ea2b96ba340e9ba8729
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table mavi_categoria
+ref table mavi_empresa
+ref table mavi_loja
+ref table DateTableTemplate_a734cb83-9101-4169-95d9-fd43f57e10f0
+ref table mavi_produto
+ref table mavi_varejista
+ref table _Formulas
+ref table _MASCARA_FORMULAS
+ref table _MASCARA_FORMULAS_MERCADO
+ref table 'PERIODO A'
+ref table LocalDateTable_25aaf173-5154-4d0c-a7bc-2936b9d3a0f2
+ref table 'PERIODO B'
+ref table LocalDateTable_80d4bcf9-3ddc-4a5c-bd60-1713dd01cffc
+ref table 'Selecao de Medidas'
+ref table Tempo
+ref table Selecao_FairShare
+ref table Selecao_Manter
+ref table Selecao_Ativo
+ref table 'Periodos Acumulados'
+ref table 'PERIODO C'
+ref table LocalDateTable_72f5b30c-b420-434f-bda0-e1334573d59e
+ref table mavi_prod_lj
+
+ref cultureInfo pt-BR
+

@@ -1,0 +1,529 @@
+table Tempo
+	lineageTag: 1d9efa9f-b83b-4714-8b54-811c2b10c1bd
+
+	measure Tempo_YTD_var_A_B =
+			
+			VAR DIVISAO = DIVIDE([Tempo_YTD_B],[Tempo_YTD_A],1)-1
+			VAR EMBRANCO = OR([Tempo_YTD_B] = 0, [Tempo_YTD_A] = 0)
+			RETURN
+			IF(EMBRANCO = FALSE,DIVISAO)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: 5f9c38ce-661f-4ccf-9633-92903de7518f
+
+	measure Tempo_YTD_B = ```
+			
+			VAR ano = MAX('PERIODO B'[ano_b])
+			VAR MES = CALCULATE(MIN(mavi_prod_lj[dia]), mavi_prod_lj[ano] = ano)
+			VAR diffdate = CALCULATE(DATEDIFF(DATE(ano,1,1),MAX('PERIODO B'[data b]),MONTH)+1)
+			RETURN
+			CALCULATE([_P_MEDIDA],DATESINPERIOD('mavi_prod_lj'[dia], MAX('PERIODO B'[data b]),CALCULATE(diffdate *-1),MONTH))
+			
+			```
+		displayFolder: Variaveis
+		lineageTag: 65332bdb-0488-47ce-84e2-44d88543a749
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MAT_var_A_B = ```
+			
+			VAR DIVISAO = DIVIDE([Tempo_MAT_B],[Tempo_MAT_A],1)-1
+			VAR EMBRANCO = OR([Tempo_MAT_B] = 0, [Tempo_MAT_A] = 0)
+			
+			RETURN
+			IF(EMBRANCO = FALSE,DIVISAO)
+			
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: 1c41f5f5-1ee1-4372-8cd1-9d2bf3ef9706
+
+	measure Tempo_MAT_B =
+			
+			
+			
+			CALCULATE([VALOR],DATESINPERIOD(mavi_prod_lj[dia], MAX('PERIODO B'[data b]),-12,MONTH))
+			
+			// VAR diffdate = CALCULATE(DATEDIFF([dateMIN],MAX('PERIODO B'[data b]),MONTH)+1)
+			// RETURN
+			
+			// CALCULATE([_RK_P_MEDIDA_B],DATESINPERIOD('PERIODO B'[data b], MAX('PERIODO B'[data b]),CALCULATE(diffdate *-1),MONTH))
+		formatString: #,0.00
+		displayFolder: Variaveis
+		lineageTag: 26208642-9564-4c3b-aa58-227728e3f6fc
+
+	measure Tempo_MAT_A = ```
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			
+			CALCULATE([VALOR],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-12,MONTH))
+			
+			
+			// VAR diffdate = CALCULATE(DATEDIFF([dateMIN],MAX('PERIODO B'[data b]),MONTH)+1)
+			// VAR Ano = CALCULATE(max('PERIODO B'[data b].[Ano]) - 1)
+			// VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			// RETURN 
+			// CALCULATE('Selecao de Medidas'[_MEDIDA_CHAVE],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),CALCULATE(diffdate *-1),MONTH))
+			```
+		displayFolder: Variaveis
+		lineageTag: 7bc30bbf-707d-40de-93f7-65a789b63fae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_YTD_A = ```
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR diffdate = CALCULATE(DATEDIFF(DATE(ano+1,1,1),MAX('PERIODO B'[data b]),MONTH)+1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN 
+			
+			CALCULATE([_P_MEDIDA],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),CALCULATE(diffdate *-1),MONTH))
+			```
+		displayFolder: Variaveis
+		lineageTag: 3942dd80-e99b-4e3a-8a87-a23985f6eb7d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TRI_B =
+			
+			
+			CALCULATE([_P_MEDIDA],DATESINPERIOD('mavi_prod_lj'[dia], MAX('PERIODO B'[data b]),-3,MONTH))
+		displayFolder: Variaveis
+		lineageTag: a61ceb98-6d85-47b7-a718-2c4e0879397a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TRI_A = ```
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			
+			CALCULATE([_P_MEDIDA],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-3,MONTH))
+			
+			// VAR diffdate = CALCULATE(DATEDIFF([dateMIN],MAX('PERIODO B'[data b]),MONTH)+1)
+			// VAR Ano = CALCULATE(max('PERIODO B'[data b].[Ano]) - 1)
+			// VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			// RETURN 
+			// CALCULATE('Selecao de Medidas'[_MEDIDA_CHAVE],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),CALCULATE(diffdate *-1),MONTH))
+			```
+		displayFolder: Variaveis
+		lineageTag: ffd3da97-4112-4b86-9adc-e48c06b45d97
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TRI_var_A_B =
+			
+			VAR DIVISAO = DIVIDE([Tempo_TRI_B],[Tempo_TRI_A],1)-1
+			VAR EMBRANCO = OR([Tempo_TRI_B] = 0, [Tempo_TRI_A] = 0)
+			RETURN
+			IF(EMBRANCO = FALSE,DIVISAO)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Medidas
+		lineageTag: fb427b47-20e2-4ec1-a0ad-5861370d4880
+
+	measure Tempo_MES_B = CALCULATE([_P_MEDIDA],DATESINPERIOD('mavi_prod_lj'[dia], MAX('PERIODO B'[data b]),-1,MONTH))
+		displayFolder: Variaveis
+		lineageTag: ef6491dc-a38f-4f66-8181-a75108a8ba8b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MES_A = ```
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			CALCULATE([_P_MEDIDA], FILTER( 'mavi_prod_lj', mavi_prod_lj[dia] = DATE(Ano, MES, 1)))
+			
+			```
+		displayFolder: Variaveis
+		lineageTag: f4001b6a-49af-44dc-884b-2272f7231620
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MES_var_A_B =
+			
+			VAR DIVISAO = DIVIDE([Tempo_MES_B],[Tempo_MES_A],1)-1
+			VAR EMBRANCO = OR([Tempo_MES_B] = 0, [Tempo_MES_A] = 0)
+			RETURN
+			IF(EMBRANCO = FALSE,DIVISAO)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: b3e40020-bba5-473f-bd8c-a80d662def28
+
+	measure Tempo_MES_contr_A_B = CALCULATE(('Tempo'[Tempo_MES_B]-'Tempo'[Tempo_MES_A])/( 'Tempo'[Tempo_TT_MES_A]))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: 81a80889-1e9e-4558-883d-7b199fbfbac5
+
+	measure Tempo_TRI_contr_A_B = CALCULATE(('Tempo'[Tempo_TRI_B]-'Tempo'[Tempo_TRI_A])/ ('Tempo'[Tempo_TT_TRI_A]))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: d1319c45-fe28-40cf-9ce5-5b409932cfae
+
+	measure Tempo_YTD_contr_A_B = CALCULATE(('Tempo'[Tempo_YTD_B]-'Tempo'[Tempo_YTD_A])/('Tempo'[Tempo_TT_YTD_A]))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: f6663555-daa9-4924-9ad3-28f9b210f123
+
+	measure Tempo_MAT_contr_A_B = CALCULATE(('Tempo'[Tempo_MAT_B]-'Tempo'[Tempo_MAT_A])/('Tempo'[Tempo_TT_MAT_A]))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: c3f77c4c-8e5c-4ca4-90de-1a19ac6374cc
+
+	measure Tempo_YTD_part_B =
+			
+			VAR TT = IF('Tempo'[Tempo_YTD_B]=0,BLANK(),CALCULATE('Tempo'[Tempo_YTD_B],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista])))
+			RETURN[Tempo_YTD_B]/TT
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: ec667527-879a-4d0f-b44c-15b81526aa14
+
+	measure Tempo_MAT_part_B =
+			
+			VAR TT = IF('Tempo'[Tempo_MAT_B]=0,BLANK(),CALCULATE('Tempo'[Tempo_MAT_B],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista])))
+			RETURN  CALCULATE([Tempo_MAT_B]/TT)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: e486e478-14f3-4c9a-8432-1b4b6a3cc473
+
+	measure Tempo_TRI_part_B =
+			
+			VAR TT = IF('Tempo'[Tempo_TRI_B]=0,BLANK(),CALCULATE('Tempo'[Tempo_TRI_B],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista])))
+			RETURN[Tempo_TRI_B]/TT
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: b0803049-95a2-4bb5-8440-6cb5c94b2ad4
+
+	measure Tempo_MES_part_B =
+			
+			VAR TT = IF('Tempo'[Tempo_MES_B]=0,BLANK(),CALCULATE('Tempo'[Tempo_MES_B],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista])))
+			RETURN[Tempo_MES_B]/TT
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Medidas
+		lineageTag: ec959632-111d-4b10-b45d-be03c1b59278
+
+	measure Tempo_TT_TRI_A = CALCULATE([Tempo_TRI_A],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: 5167c8ce-a01d-4423-971a-6f49d8d74658
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TT_YTD_A = CALCULATE([Tempo_YTD_A], ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: b09fad07-93b0-4f17-8cda-a19dbb56e1c1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TT_MES_A = CALCULATE([Tempo_MES_A], ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: 7291c5b4-b840-44d9-b32d-765676ef307a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TT_MAT_A = CALCULATE([Tempo_MAT_A],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: b0f9a8b0-fbf6-418b-b420-6658b1f37535
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TT_MAT_B = CALCULATE([Tempo_MAT_B],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: 86d145f0-346a-438c-90ff-90c4317af2e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Medida
+		displayFolder: Totalizadores
+		lineageTag: a1c8fb15-24df-469e-8ed1-e8c42eec44a3
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure Tempo_TT_MES_B = CALCULATE([Tempo_MES_B], ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: be269a44-ca15-40dd-8f5b-5a9339b3534d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TT_TRI_B = CALCULATE([Tempo_TRI_B],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: 84879a3c-c4f4-4592-91b2-20c949e0da14
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TT_YTD_B = CALCULATE([Tempo_YTD_B], ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: 1518eaa7-7d72-481f-8f2c-94a82c3c94a1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SelectedDate = MAX('PERIODO B'[data b])
+		formatString: General Date
+		displayFolder: Variaveis
+		lineageTag: 14c462df-3ebc-41e6-ad41-1db34ff23d9c
+
+	measure Tempo_MAT_A_QTD =
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			CALCULATE([quantidade],DATESINPERIOD('MAVI_prod_lj'[dia], DATE(Ano,MES,1),-12,MONTH))
+		displayFolder: Variaveis QTD\MEDIDA
+		lineageTag: 5e8e3529-f40a-4c3b-a841-1d92b03e7a36
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MAT_B_QTD =
+			
+			CALCULATE([quantidade],DATESINPERIOD(mavi_prod_lj[dia], MAX('PERIODO B'[data b]),-12,MONTH))
+		displayFolder: Variaveis QTD\MEDIDA
+		lineageTag: abb18fea-95cb-433b-8e7a-bef2b155c69d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MES_A_QTD =
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[data b].[Ano]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			CALCULATE([quantidade], FILTER( 'mavi_prod_lj', mavi_prod_lj[dia] = DATE(Ano, MES, 1)))
+		displayFolder: Variaveis QTD\MEDIDA
+		lineageTag: b5e7939c-d30f-4448-b76a-f569a91e71c5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MES_B_QTD =
+			
+			CALCULATE([quantidade],DATESINPERIOD(mavi_prod_lj[dia], MAX('PERIODO B'[data b]),-1,MONTH))
+		displayFolder: Variaveis QTD\MEDIDA
+		lineageTag: 67e3ab12-1093-411b-bde0-faf3f2f2a2c9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_YTD_A_QTD = ```
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[data b].[Ano]) - 1)
+			VAR diffdate = CALCULATE(DATEDIFF(DATE(ano+1,1,1),MAX('PERIODO B'[data b]),MONTH)+1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN 
+			
+			CALCULATE([quantidade],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),CALCULATE(diffdate *-1),MONTH))
+			```
+		displayFolder: Variaveis QTD\MEDIDA
+		lineageTag: e3e70949-f5ad-44a8-9ba6-ca885c1a87e0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_YTD_B_QTD =
+			
+			VAR ano = MAX('PERIODO B'[data b].[Ano])
+			VAR MES = CALCULATE(MIN(mavi_prod_lj[dia]), mavi_prod_lj[ano] = ano)
+			VAR diffdate = CALCULATE(DATEDIFF(DATE(ano,1,1),MAX('PERIODO B'[data b]),MONTH)+1)
+			RETURN
+			CALCULATE([quantidade],DATESINPERIOD('mavi_prod_lj'[dia], MAX('PERIODO B'[data b]),CALCULATE(diffdate *-1),MONTH))
+		displayFolder: Variaveis QTD\MEDIDA
+		lineageTag: 9e4c92b8-323f-4f11-a1e8-91be9c425722
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TRI_B_QTD =
+			
+			VAR diffdate = CALCULATE(DATEDIFF([dateMIN],MAX('PERIODO B'[data b]),MONTH)+1)
+			RETURN
+			
+			CALCULATE([quantidade],DATESINPERIOD('mavi_prod_lj'[dia], MAX('PERIODO B'[data b]),-3,MONTH))
+		displayFolder: Variaveis QTD\MEDIDA
+		lineageTag: 39f7f3f1-5459-4cd9-a932-6d66b5216cab
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TRI_A_QTD =
+			
+			VAR diffdate = CALCULATE(DATEDIFF([dateMIN],MAX('PERIODO B'[data b]),MONTH)+1)
+			VAR Ano = CALCULATE(max('PERIODO B'[data b].[Ano]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			
+			CALCULATE([quantidade],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-3,MONTH))
+		displayFolder: Variaveis QTD\MEDIDA
+		lineageTag: 05e8cd04-6dda-4491-a8b6-e160ba4788c8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_YTD_B_VAL =
+			
+			VAR ano = MAX('PERIODO B'[data b].[Ano])
+			VAR MES = CALCULATE(MIN(mavi_prod_lj[dia]), mavi_prod_lj[ano] = ano)
+			VAR diffdate = CALCULATE(DATEDIFF(DATE(ano,1,1),MAX('PERIODO B'[data b]),MONTH)+1)
+			RETURN
+			CALCULATE([valor],DATESINPERIOD('mavi_prod_lj'[dia], MAX('PERIODO B'[data b]),CALCULATE(diffdate *-1),MONTH))
+		displayFolder: Variaveis VAL\MEDIDA
+		lineageTag: 70f63754-a902-4ada-b786-d45f9adbb247
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_YTD_A_VAL = ```
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[data b].[Ano]) - 1)
+			VAR diffdate = CALCULATE(DATEDIFF(DATE(ano+1,1,1),MAX('PERIODO B'[data b]),MONTH)+1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN 
+			
+			CALCULATE([valor],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),CALCULATE(diffdate *-1),MONTH))
+			```
+		displayFolder: Variaveis VAL\MEDIDA
+		lineageTag: 75d0e1d2-9da1-4e60-bfc9-413b54f2cf0f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TRI_B_VAL =
+			
+			
+			
+			CALCULATE([valor],DATESINPERIOD('mavi_prod_lj'[dia], MAX('PERIODO B'[data b]),-3,MONTH))
+		displayFolder: Variaveis VAL\MEDIDA
+		lineageTag: 5cca1d33-5711-4d32-8b58-f056755244a4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TRI_A_VAL =
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[data b].[Ano]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			
+			CALCULATE([valor],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-3,MONTH))
+		displayFolder: Variaveis VAL\MEDIDA
+		lineageTag: 52dc8467-2292-4c87-885e-0e71b2149bc2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MES_B_VAL =
+			
+			CALCULATE([valor],DATESINPERIOD(mavi_prod_lj[dia], MAX('PERIODO B'[data b]),-1,MONTH))
+		displayFolder: Variaveis VAL\MEDIDA
+		lineageTag: 01826043-ff10-45b0-b9f0-df36a3ab9d82
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MES_A_VAL =
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[data b].[Ano]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			CALCULATE([valor], FILTER( 'mavi_prod_lj', mavi_prod_lj[dia] = DATE(Ano, MES, 1)))
+		displayFolder: Variaveis VAL\MEDIDA
+		lineageTag: f1779717-9897-4dec-8c75-c6fd999a405e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MAT_B_VAL =
+			
+			CALCULATE([VALOR],DATESINPERIOD(mavi_prod_lj[dia], MAX('PERIODO B'[data b]),-12,MONTH))
+		displayFolder: Variaveis VAL\MEDIDA
+		lineageTag: 85df26de-3a12-4d39-8fbc-c16ac6bb2aba
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MAT_A_VAL =
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			CALCULATE([valor],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-12,MONTH))
+		formatString: #,0
+		displayFolder: Variaveis VAL\MEDIDA
+		lineageTag: d44f8cdb-081a-4c3f-a335-2eb46c030fda
+
+	measure MAT_B_VAL_FAMI = CALCULATE([Tempo_MAT_B], mavi_produto[sub_categoria] = "FAMILIAR")
+		displayFolder: Variaveis
+		lineageTag: e7eaae3d-5a45-4b5a-a808-2f9c4c9d25ca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_L3M_A = CALCULATE([_P_MEDIDA],DATESINPERIOD('mavi_prod_lj'[dia], MIN('PERIODO B'[data b]),-3,MONTH))
+		displayFolder: Variaveis
+		lineageTag: 8c3e33e9-355e-4494-9bad-27565e8401dc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_LM_A = CALCULATE([_P_MEDIDA],DATESINPERIOD('mavi_prod_lj'[dia], MIN('PERIODO B'[data b]),-1,MONTH))
+		displayFolder: Variaveis
+		lineageTag: f5c8813f-06e0-428b-ac95-25cc69a6db37
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_L3M_var_A_B =
+			
+			VAR DIVISAO = DIVIDE([Tempo_TRI_B],[Tempo_L3M_A],1)-1
+			VAR EMBRANCO = OR([Tempo_TRI_B] = 0, [Tempo_L3M_A] = 0)
+			RETURN
+			IF(EMBRANCO = FALSE,DIVISAO)
+		displayFolder: Medidas
+		lineageTag: a4086891-b9c0-4878-81e5-0359a83b79a5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_L3M_contr_A_B = CALCULATE(('Tempo'[Tempo_TRI_B]-'Tempo'[Tempo_L3M_A])/ ('Tempo'[Tempo_TT_L3M_A]))
+		displayFolder: Medidas
+		lineageTag: 1dcc6207-5f6a-4e3a-a39c-6507b37b187b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TT_L3M_A = CALCULATE([Tempo_L3M_A],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: a82dc306-386d-4034-b9c2-03e7cd25651a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_TT_LM_A = CALCULATE([Tempo_LM_A],ALLSELECTED(mavi_prod_lj),VALUES(mavi_categoria[nome_categoria]),VALUES(mavi_varejista[nome_varejista]))
+		displayFolder: Totalizadores
+		lineageTag: d63c9594-be20-44ad-b5cb-41a1ac901e7b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_LM_var_A_B =
+			
+			VAR DIVISAO = DIVIDE([Tempo_MES_B],[Tempo_LM_A],1)-1
+			VAR EMBRANCO = OR([Tempo_MES_B] = 0, [Tempo_LM_A] = 0)
+			RETURN
+			IF(EMBRANCO = FALSE,DIVISAO)
+		displayFolder: Medidas
+		lineageTag: d962e3dd-b1ee-4278-983d-e0844669411c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_LM_contr_A_B = CALCULATE(('Tempo'[Tempo_MES_B]-'Tempo'[Tempo_LM_A])/( 'Tempo'[Tempo_TT_LM_A]))
+		displayFolder: Medidas
+		lineageTag: 97b1234a-3a79-416f-b785-3af56e8ff339
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: 49cc41e3-8c65-4590-aa8d-cd4d6c8fca32
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Tempo = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 56d38d734ac54e5b9efc645fbe573276
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

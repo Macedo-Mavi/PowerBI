@@ -1,0 +1,48 @@
+table Selecao_FairShare
+	lineageTag: 88ff8a47-e350-4641-b55a-a40f17410439
+
+	column Selecao_FairShare
+		lineageTag: 14f50231-73d2-49ea-b1b1-d8e78504b65b
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Selecao_FairShare Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Selecao_FairShare Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Selecao_FairShare Campos'
+		lineageTag: cc626c8a-e5e7-4bb3-a680-5eab912662c7
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Selecao_FairShare Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Selecao_FairShare Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: ff9da339-d7e9-428f-a36a-4f802744ba0e
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Selecao_FairShare = calculated
+		mode: import
+		source =
+				{
+				    ("60X40", "60X40", 0),
+				    ("50X50", "50X50", 1),
+				    ("40X60", "40X60",2)
+				}
+
+	annotation PBI_Id = b7a592e8215246ddbfbccc263762c68c
+

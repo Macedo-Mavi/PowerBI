@@ -1,0 +1,66 @@
+relationship 808c21f3-ef67-4a19-ab61-851e1ec0e75d
+	fromColumn: mavi_loja.cod_empresa
+	toColumn: mavi_empresa.cod_empresa
+
+	annotation PBI_IsFromSource = FS
+
+relationship acdc8814-3da8-4df9-ba0e-15d57015e6a4
+	fromColumn: mavi_loja.cod_varejista
+	toColumn: mavi_varejista.cod_varejista
+
+	annotation PBI_IsFromSource = FS
+
+relationship 2ee48408-1440-4741-8549-15a31f545ea8
+	fromColumn: mavi_produto.cod_categoria
+	toColumn: mavi_categoria.cod_categoria
+
+	annotation PBI_IsFromSource = FS
+
+relationship 78607d6b-c77e-4a68-8b44-abdbff4ab66a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'PERIODO A'.'data a'
+	toColumn: LocalDateTable_25aaf173-5154-4d0c-a7bc-2936b9d3a0f2.Date
+
+relationship 19b894a6-43f5-4854-aca1-ca2d4a138c50
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'PERIODO B'.'data b'
+	toColumn: LocalDateTable_80d4bcf9-3ddc-4a5c-bd60-1713dd01cffc.Date
+
+relationship 23aac643-f4fd-4b92-a689-e1caf8f9b2d7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'PERIODO C'.'data c'
+	toColumn: LocalDateTable_72f5b30c-b420-434f-bda0-e1334573d59e.Date
+
+relationship 3c86157c-66e2-4e52-bfb6-f9f157fdd079
+	fromColumn: mavi_prod_lj.cod_loja
+	toColumn: mavi_loja.cod_loja
+
+	annotation PBI_IsFromSource = FS
+
+relationship 39e7c522-e9d4-4470-9563-f271acbf7c99
+	fromColumn: mavi_prod_lj.cod_produto
+	toColumn: mavi_produto.cod_produto
+
+	annotation PBI_IsFromSource = FS
+
+relationship 37555c91-0cb9-417a-bec1-5647aafe4916
+	isActive: false
+	fromColumn: mavi_prod_lj.'mavi_produto.cod_categoria'
+	toColumn: mavi_categoria.cod_categoria
+
+	annotation PBI_IsFromSource = FS
+
+relationship 70655d34-0c7c-f4b6-4e57-7813b1631224
+	isActive: false
+	fromColumn: mavi_prod_lj.dia
+	toColumn: 'PERIODO B'.'data b'
+
+relationship 885065bb-dc9c-5bfb-2c86-5f11c3677d9c
+	fromColumn: mavi_prod_lj.dia
+	toColumn: 'PERIODO C'.'data c'
+
+relationship 1366a36a-fb09-fe25-2c02-1d045c51e6de
+	isActive: false
+	fromColumn: mavi_prod_lj.dia
+	toColumn: 'PERIODO A'.'data a'
+

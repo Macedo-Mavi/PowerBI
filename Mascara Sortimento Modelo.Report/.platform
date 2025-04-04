@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Mascara Sortimento Modelo"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "060646ed-5f48-41ca-9648-bc0f574f543b"
+  }
+}

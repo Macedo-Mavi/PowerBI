@@ -1,0 +1,33 @@
+table mavi_varejista
+	lineageTag: 71a52e6b-dc33-486a-9ad1-db10b581ec01
+
+	column cod_varejista
+		dataType: int64
+		formatString: 0
+		lineageTag: c5704ab6-38ba-4fa7-82f3-d224e062c768
+		summarizeBy: none
+		sourceColumn: cod_varejista
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_varejista
+		dataType: string
+		lineageTag: d6cd9fdf-da84-41e3-a9ec-f9cb59d66910
+		summarizeBy: none
+		sourceColumn: nome_varejista
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mavi_varejista = m
+		mode: import
+		source =
+				let
+				    Fonte = MySQL.Database("162.214.169.214", "mavi_unilever_personal_care", [ReturnSingleDatabase=true]),
+				    mavi_unilever_personal_care_varejista = Fonte{[Schema="mavi_unilever_personal_care",Item="varejista"]}[Data]
+				in
+				    mavi_unilever_personal_care_varejista
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

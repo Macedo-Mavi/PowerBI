@@ -1,0 +1,135 @@
+table _Formulas
+	lineageTag: cba3842c-5bda-4070-8d5e-8cd01ab69da0
+
+	measure _P_MEDIDA_A = CALCULATE('Selecao de Medidas'[_MEDIDA_CHAVE],USERELATIONSHIP('PERIODO A'[data a],mavi_prod_lj[dia]))
+		displayFolder: MEDIDAS
+		lineageTag: 45825ec1-bc3a-40cd-a44c-77297448ad65
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _P_MEDIDA_B = CALCULATE('Selecao de Medidas'[_MEDIDA_CHAVE],USERELATIONSHIP('PERIODO B'[data b],mavi_prod_lj[dia]))
+		displayFolder: MEDIDAS
+		lineageTag: 08d791b8-a25a-441e-b516-32942ffe431f
+
+	measure _P_MEDIDA = CALCULATE('Selecao de Medidas'[_MEDIDA_CHAVE])
+		displayFolder: MEDIDAS
+		lineageTag: 1dff4ff8-efc4-41c1-9a5d-a5d994de0245
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure VALOR = sum('mavi_prod_lj'[valor])
+		formatString: "R$"#,0;-"R$"#,0;"R$"#,0
+		displayFolder: VALORES
+		lineageTag: ecdf5f48-3b31-49c4-bfcc-2a4160ee24be
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure QUANTIDADE = SUM('mavi_prod_lj'[quantidade])
+		formatString: #,0
+		displayFolder: VALORES
+		lineageTag: f1e6e90a-f626-4310-932d-7c8438180b97
+
+	measure SHARE_MES_B_FAB_X = DIVIDE([TEMPO_MES_B_FAB_X],[_P_MEDIDA_B])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: VALORES
+		lineageTag: 4ae70a07-e407-4093-b5f3-155b8d11fb6e
+
+	measure TEMPO_MES_B_FAB_X = CALCULATE([Tempo_MES_B], FILTER(mavi_produto, mavi_produto[fabricante] = [Fabricante_X]))
+		displayFolder: VALORES
+		lineageTag: 18ea1d5a-f6f1-4d51-8220-1f9d446f80da
+
+	measure Fabricante_X = "UNILEVER"
+		displayFolder: VALORES
+		lineageTag: d0e194d4-717f-4eee-998b-f930fe0f2a10
+
+	measure Lojas_Sem_Venda = ```
+			
+			VAR LojasComVenda = 
+			    CALCULATETABLE(
+			        VALUES(mavi_loja[nome_loja]), 
+			        FILTER(mavi_prod_lj, [Tempo_MES_B]<>BLANK())
+			    )
+			VAR LojasSemVenda = 
+			    FILTER(
+			        mavi_loja,
+			        NOT mavi_loja[nome_loja] IN LojasComVenda 
+			    )
+			
+			RETURN 
+			SWITCH(TRUE(),
+			[_P_CONTAGEM_lojas_B_part%] = 1, BLANK(),
+			CONCATENATEX(LojasSemVenda, mavi_loja[nome_loja], " | "))
+			```
+		displayFolder: VALORES
+		lineageTag: 8ee5de01-b983-4e3e-a15c-d4c0471e0fc4
+
+	measure _P_CONTAGEM_lojas_B_part% = IF(_Formulas[_P_CONTAGEM_lojas_tt_marca_B]=0,BLANK() ,DIVIDE([_P_CONTAGEM_lojas_B],[_P_CONTAGEM_lojas_tt_marca_B]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: VALORES
+		lineageTag: 034e74f1-5a2c-4813-ad74-a1e4ebb539d5
+
+	measure _P_CONTAGEM_lojas_tt_marca_B = IF([_P_CONTAGEM_lojas_B]=0,BLANK(),CALCULATE([_P_CONTAGEM_lojas_B],ALLSELECTED(mavi_prod_lj)))
+		displayFolder: VALORES
+		lineageTag: a7fc8c3d-c098-4aac-bdd7-764cea14ecf0
+
+	measure _P_CONTAGEM_lojas_B = CALCULATE(_Formulas[contagem_lojas],USERELATIONSHIP('PERIODO B'[data b],mavi_prod_lj[dia]))
+		displayFolder: VALORES
+		lineageTag: cc3e2a73-da87-4b17-af43-77c166420300
+
+	measure contagem_lojas = CALCULATE(DISTINCTCOUNT('mavi_loja'[nome_loja]), VALUES(mavi_prod_lj))
+		formatString: 0
+		displayFolder: VALORES
+		lineageTag: 4ab562fe-d20e-43b5-a398-0d18c093fb32
+
+	measure _P_PRECO_MEDIO_B = if([_P_QUANTIDADE_B]=0,blank(), DIVIDE([_P_VALOR_B], [_P_QUANTIDADE_B]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: VALORES
+		lineageTag: e4931868-5507-4cf5-95ab-188d5ef3c425
+
+	measure _P_VALOR_B = CALCULATE(_Formulas[VALOR],USERELATIONSHIP('PERIODO B'[data b],mavi_prod_lj[dia]))
+		displayFolder: VALORES
+		lineageTag: 3dc4cea5-dc3c-4205-8553-45dddf9839ea
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _P_QUANTIDADE_B = CALCULATE([QUANTIDADE],USERELATIONSHIP('PERIODO B'[data b],mavi_prod_lj[dia]))
+		displayFolder: VALORES
+		lineageTag: 9ebbcf2d-77f0-4cf6-a9fe-ba983a317c84
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Lojas com venda' = ```
+			
+			VAR LojasComVenda = 
+			    CALCULATETABLE(
+			        VALUES(mavi_loja[nome_loja]),
+			        FILTER(mavi_prod_lj, [_P_MEDIDA_B]<>BLANK())
+			    )
+			RETURN
+			CONCATENATEX(LojasComVenda, mavi_loja[nome_loja], " | ")
+			```
+		displayFolder: VALORES
+		lineageTag: ecab6101-431f-40c0-bb2d-b4c3fa739852
+
+	column 'Coluna 1'
+		dataType: string
+		isHidden
+		lineageTag: 0358084b-a082-4648-9ccc-6653a79f5959
+		summarizeBy: none
+		sourceColumn: Coluna 1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Formulas = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

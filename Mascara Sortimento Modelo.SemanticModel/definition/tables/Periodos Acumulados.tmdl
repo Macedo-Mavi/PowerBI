@@ -1,0 +1,90 @@
+table 'Periodos Acumulados'
+	lineageTag: 6053dd5c-fc9a-4596-87bb-2696536311e7
+
+	column 'Periodos Acumulados'
+		lineageTag: a301fd5e-c4ec-4317-8794-304d0987be90
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Periodos Acumulados Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Periodos Acumulados Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Periodos Acumulados Campos'
+		lineageTag: 14d349fb-8e58-4f73-9473-4dbb89921e22
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Periodos Acumulados Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Periodos Acumulados Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: fd8b5402-1cae-47a3-a2d7-6a0ded83a7fa
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Calc =
+			SWITCH(TRUE(),
+			
+			
+			CONTAINSSTRING('Periodos Acumulados'[Periodos Acumulados], "YTD"), "YTD",
+			CONTAINSSTRING('Periodos Acumulados'[Periodos Acumulados], "MAT"), "MAT",
+			CONTAINSSTRING('Periodos Acumulados'[Periodos Acumulados], "TRI"), "L3MY",
+			CONTAINSSTRING('Periodos Acumulados'[Periodos Acumulados], "MES"), "LMY",
+			CONTAINSSTRING('Periodos Acumulados'[Periodos Acumulados], "L3M"), "L3M",
+			CONTAINSSTRING('Periodos Acumulados'[Periodos Acumulados], "LM"), "LM"
+			 )
+		lineageTag: 9dcd7329-1241-4901-a463-d3d7e982cd78
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Periodos Acumulados' = calculated
+		mode: import
+		source =
+				{
+				    ("FATURAMENTO YTD", NAMEOF('Tempo'[Tempo_YTD_B]), 0.1),
+				    ("FATURAMENTO MAT", NAMEOF('Tempo'[Tempo_MAT_B]), 0.2),
+				    ("FATURAMENTO TRI", NAMEOF('Tempo'[Tempo_TRI_B]), 0.3),
+				    ("FATURAMENTO MES", NAMEOF('Tempo'[Tempo_MES_B]), 0.4),
+				
+				    ("VAR% YTD", NAMEOF('Tempo'[Tempo_YTD_var_A_B]), 1),
+				    ("PART% YTD", NAMEOF('Tempo'[Tempo_YTD_part_B]), 2),
+				    ("CONTR% YTD", NAMEOF('Tempo'[Tempo_YTD_contr_A_B]), 3),
+				
+				
+				    ("VAR% MAT", NAMEOF('Tempo'[Tempo_MAT_var_A_B]), 4),
+				    ("PART% MAT", NAMEOF('Tempo'[Tempo_MAT_part_B]), 5),
+				    ("CONTR% MAT", NAMEOF('Tempo'[Tempo_MAT_contr_A_B]), 6),
+				
+				    ("VAR% TRI", NAMEOF('Tempo'[Tempo_TRI_var_A_B]), 7),
+				    ("PART% TRI", NAMEOF('Tempo'[Tempo_TRI_part_B]), 8),
+				    ("CONTR% TRI", NAMEOF('Tempo'[Tempo_TRI_contr_A_B]), 9),
+				
+				    ("VAR% MES", NAMEOF('Tempo'[Tempo_MES_var_A_B]),10),
+				    ("PART% MES", NAMEOF('Tempo'[Tempo_MES_part_B]), 11),
+				    ("CONTR% MES", NAMEOF('Tempo'[Tempo_MES_contr_A_B]), 12),
+				
+				    ("VAR% L3M", NAMEOF('Tempo'[Tempo_L3M_var_A_B]),10),
+				    ("PART% L3M", NAMEOF('Tempo'[Tempo_TRI_part_B]), 11),
+				    ("CONTR% L3M", NAMEOF('Tempo'[Tempo_L3M_contr_A_B]), 12),
+				
+				    ("VAR% LM", NAMEOF('Tempo'[Tempo_LM_var_A_B]),10),
+				    ("PART% LM", NAMEOF('Tempo'[Tempo_MES_part_B]), 11),
+				    ("CONTR% LM", NAMEOF('Tempo'[Tempo_LM_contr_A_B]), 12)
+				}
+
+	annotation PBI_Id = e90e03d40941420791e09ef66c34cd98
+

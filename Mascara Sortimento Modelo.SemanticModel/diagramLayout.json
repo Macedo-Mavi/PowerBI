@@ -1,0 +1,345 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 9950,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 155191.29144579859,
+            "y": 145208.85764459296
+          },
+          "nodeIndex": "mavi_categoria",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 278492.0757764125
+          },
+          "nodeIndex": "mavi_empresa",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 154622.59854588876,
+            "y": 145145.71445960371
+          },
+          "nodeIndex": "mavi_loja",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 154907.07716117118,
+            "y": 145137.63357503741
+          },
+          "nodeIndex": "mavi_produto",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 19260.099826036603,
+            "y": 4905
+          },
+          "nodeIndex": "mavi_varejista",
+          "nodeLineageTag": "71a52e6b-dc33-486a-9ad1-db10b581ec01",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 155943.29144579859,
+            "y": 138440.53788820625
+          },
+          "nodeIndex": "_Formulas",
+          "nodeLineageTag": "cba3842c-5bda-4070-8d5e-8cd01ab69da0",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "_MASCARA_FORMULAS",
+          "nodeLineageTag": "fdf822e7-29e7-4252-a34b-bcd0cc10a4a1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "_MASCARA_FORMULAS_MERCADO",
+          "nodeLineageTag": "a212bea4-45e1-4494-b672-f99d4ac75971",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "PERIODO A",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "PERIODO B",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Selecao de Medidas",
+          "nodeLineageTag": "801d556b-e592-4da0-bc3f-95b166320a56",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Tempo",
+          "nodeLineageTag": "1d9efa9f-b83b-4714-8b54-811c2b10c1bd",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Selecao_FairShare",
+          "nodeLineageTag": "88ff8a47-e350-4641-b55a-a40f17410439",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Selecao_Manter",
+          "nodeLineageTag": "c0d3636a-c6e1-4997-bf02-ae404f841104",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Selecao_Ativo",
+          "nodeLineageTag": "1ecab184-9486-41ac-8a35-c1148658a76f",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Periodos Acumulados",
+          "nodeLineageTag": "6053dd5c-fc9a-4596-87bb-2696536311e7",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "PERIODO C",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "mavi_prod_lj",
+          "nodeLineageTag": "c767be64-30f8-4646-958e-ccd1df82c19d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 10,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 462.58363345617886,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 692,
+            "y": 515
+          },
+          "nodeIndex": "mavi_categoria",
+          "nodeLineageTag": "52b50c73-3265-4b61-8588-6a65d1731336",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1003,
+            "y": 295
+          },
+          "nodeIndex": "mavi_empresa",
+          "nodeLineageTag": "589a2092-fac3-4c38-88f9-20f7c581c909",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 731,
+            "y": 0
+          },
+          "nodeIndex": "mavi_loja",
+          "nodeLineageTag": "bfc019d5-4aa4-4a2d-a43d-6220321b92b4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 321,
+            "y": 277
+          },
+          "nodeIndex": "mavi_produto",
+          "nodeLineageTag": "e14b345b-4077-4ec0-ab4c-3f24aeb9bf27",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 336,
+            "y": 0
+          },
+          "nodeIndex": "mavi_varejista",
+          "nodeLineageTag": "71a52e6b-dc33-486a-9ad1-db10b581ec01",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1762.6672555009729,
+            "y": 392.72404831792761
+          },
+          "nodeIndex": "PERIODO B",
+          "nodeLineageTag": "bf9ee351-3434-47de-a1e2-243e06abf640",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1758.8961932717107,
+            "y": 0
+          },
+          "nodeIndex": "PERIODO A",
+          "nodeLineageTag": "2a31271d-b6d2-4644-81ab-c2d5a977bd87",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1526.3473558005339,
+            "y": 655.44138362320314
+          },
+          "nodeIndex": "PERIODO C",
+          "nodeLineageTag": "561217dd-2793-469d-91f7-29e021c15953",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 983.31439478675884,
+            "y": 490.77166627874817
+          },
+          "nodeIndex": "mavi_prod_lj",
+          "nodeLineageTag": "c767be64-30f8-4646-958e-ccd1df82c19d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 79.553182037699813,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 1",
+  "defaultDiagram": "Todas as tabelas"
+}

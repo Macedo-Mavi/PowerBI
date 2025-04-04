@@ -1,0 +1,34 @@
+table mavi_categoria
+	lineageTag: 52b50c73-3265-4b61-8588-6a65d1731336
+
+	column cod_categoria
+		dataType: int64
+		formatString: 0
+		lineageTag: 87fa7007-f791-4966-a78f-c8296e71e24d
+		summarizeBy: none
+		sourceColumn: cod_categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_categoria
+		dataType: string
+		lineageTag: db6d5627-85cc-4f37-a500-41f81c246662
+		summarizeBy: none
+		sourceColumn: nome_categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mavi_categoria = m
+		mode: import
+		source =
+				let
+				    Fonte = MySQL.Database("162.214.169.214", "mavi_unilever_personal_care", [ReturnSingleDatabase=true]),
+				    mavi_unilever_personal_care_categoria = Fonte{[Schema="mavi_unilever_personal_care",Item="categoria"]}[Data],
+				    #"Linhas Filtradas" = Table.SelectRows(mavi_unilever_personal_care_categoria, each ([cod_categoria] = 1))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,552 @@
+table _MASCARA_FORMULAS_MERCADO
+	lineageTag: a212bea4-45e1-4494-b672-f99d4ac75971
+
+	measure MEDIA_ANO_1_VAL_M =
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			Var Cal = CALCULATE(DISTINCTCOUNT(mavi_prod_lj[mes]), DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-12,MONTH))
+			RETURN DIVIDE([Tempo_MAT_A_VAL_M],Cal)
+		formatString: #,0.00
+		lineageTag: d9cd3998-fa80-421e-a17f-424891510b30
+
+	measure Tempo_MAT_A_VAL_M =
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			
+			CALCULATE([valor_m],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-12,MONTH))
+		displayFolder: TEMPO
+		lineageTag: 3a57f000-3956-4657-80bb-eb2488b77697
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MEDIA_ANO_1_QTD_M =
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			Var Cal = CALCULATE(DISTINCTCOUNT(mavi_prod_lj[mes]), DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-12,MONTH))
+			RETURN DIVIDE([Tempo_MAT_A_QTD_M],Cal)
+		lineageTag: ff7e5e5d-4340-4164-bfe1-0c1c7c585c73
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MEDIA_ANO_2_QTD_M =
+			
+			Var Mes = CALCULATE(DISTINCTCOUNT(mavi_prod_lj[mes]), DATESINPERIOD(mavi_prod_lj[dia], DATE(YEAR(MAX('PERIODO B'[data b])), MONTH(MAX('PERIODO B'[data b]))-11,01), 12, MONTH))
+			RETURN DIVIDE([Tempo_MAT_B_QTD_M],Mes)
+		lineageTag: a48191e1-3d7e-4683-a888-3886fc8d551d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MAT_A_QTD_M =
+			
+			
+			VAR Ano = CALCULATE(max('PERIODO B'[ano_b]) - 1)
+			VAR MES = CALCULATE(MAX('PERIODO B'[mes_b]))
+			RETURN
+			
+			CALCULATE([quantidade_m],DATESINPERIOD('mavi_prod_lj'[dia], DATE(Ano,MES,1),-12,MONTH))
+		displayFolder: TEMPO
+		lineageTag: 917821d6-60aa-49e1-9c0d-b817fb42e910
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Tempo_MAT_B_QTD_M =
+			
+			CALCULATE([quantidade_m], DATESINPERIOD(mavi_prod_lj[dia], DATE(YEAR(MAX('PERIODO B'[data b])), MONTH(MAX('PERIODO B'[data b]))-11,01), 12, MONTH))
+		displayFolder: TEMPO
+		lineageTag: b9f9b2da-63a1-4db7-b77a-5de4bea0e889
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MEDIA_ANO_2_VAL_M =
+			
+			Var Mes = CALCULATE(DISTINCTCOUNT(mavi_prod_lj[mes]), DATESINPERIOD(mavi_prod_lj[dia], DATE(YEAR(MAX('PERIODO B'[data b])), MONTH(MAX('PERIODO B'[data b]))-11,01), 12, MONTH))
+			RETURN DIVIDE([Tempo_MAT_B_VAL_M],Mes)
+		formatString: #,0.00
+		lineageTag: 70afa69f-de02-495e-bf47-c2175fd6e340
+
+	measure Tempo_MAT_B_VAL_M =
+			
+			
+			CALCULATE([valor_m], DATESINPERIOD(mavi_prod_lj[dia], DATE(YEAR(MAX('PERIODO B'[data b])), MONTH(MAX('PERIODO B'[data b]))-11,01), 12, MONTH))
+		displayFolder: TEMPO
+		lineageTag: dc9cd1fc-948d-4533-9504-20666340e1d3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure quantidade_m = CALCULATE(CALCULATE(SUM(MAVI_prod_lj[quantidade]),FILTER(mavi_loja, mavi_loja[cluster_1] = "MERCADO")), ALL( mavi_varejista), ALL(mavi_loja))
+		lineageTag: df6d4290-b165-4304-82b1-5707d53f9a0a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TESTE_PARTICIPAÇÃO SEGMENTO M' = ```
+			
+			--------------------------------------------------
+			VAR Valores = [ESCALA_FAIR_SHARE]
+			VAR QTds =  1 - Valores
+			--------------------------------------------------
+			VAR SUBCATEGORIA = SELECTEDVALUE(mavi_produto[sub_categoria])
+			VAR SEGMENTO = SELECTEDVALUE(mavi_produto[segmento])
+			VAR SUBSEGMENTO = SELECTEDVALUE(mavi_produto[sub_segmento])
+			VAR RANGE = SELECTEDVALUE(mavi_produto[tamanho_range])
+			VAR TIER = SELECTEDVALUE(mavi_produto[desc_c])
+			
+			VAR TT_ATUAL = 
+			        [MEDIA_ANO_2_VAL_M]
+			    
+			
+			
+			VAR TT_SHARE = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_VAL_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR TT_ATUAL_Q = 
+			        [MEDIA_ANO_2_QTD_M]
+			
+			
+			VAR TT_SHARE_Q = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_QTD_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR PART = (TT_ATUAL / TT_SHARE*Valores)+(TT_ATUAL_Q/TT_SHARE_Q*QTds)
+			
+			RETURN
+			PART
+			
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f57869d2-97e1-4af3-93be-f3e831e99540
+
+	measure TESTE_RANK_SEGMENTO_M = ```
+			
+			--------------------------------------------------
+			VAR Valores = [ESCALA_FAIR_SHARE]
+			VAR QTds =  1 - Valores
+			--------------------------------------------------
+			VAR SUBCATEGORIA = SELECTEDVALUE(mavi_produto[sub_categoria])
+			VAR SEGMENTO = SELECTEDVALUE(mavi_produto[segmento])
+			VAR SUBSEGMENTO = SELECTEDVALUE(mavi_produto[sub_segmento])
+			VAR RANGE = SELECTEDVALUE(mavi_produto[tamanho_range])
+			VAR TIER = SELECTEDVALUE(mavi_produto[desc_c])
+			
+			
+			VAR TT_SHARE = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_VAL_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			
+			VAR TT_SHARE_Q = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_QTD_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR RANKING = 
+			    RANKX(
+			        ALL(mavi_produto), 
+			            CALCULATE(
+			                CALCULATE(([MEDIA_ANO_2_VAL_M] / TT_SHARE*Valores)+([MEDIA_ANO_2_QTD_M]/TT_SHARE_Q*QTds)), 
+			                mavi_produto[sub_categoria] = SUBCATEGORIA,
+			                mavi_produto[segmento] = SEGMENTO,
+			                mavi_produto[sub_segmento] = SUBSEGMENTO,
+			                mavi_produto[tamanho_range] = RANGE,
+			                mavi_produto[desc_c] = TIER
+			        )
+			    )
+			
+			RETURN
+			RANKING
+			
+			```
+		lineageTag: 2ac1c1e4-286f-4aef-a4eb-c42d9665fe2d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TESTE_PARET_SEGMENTO_M = ```
+			
+			--------------------------------------------------
+			VAR Valores = [ESCALA_FAIR_SHARE]
+			VAR QTds =  1 - Valores
+			--------------------------------------------------
+			VAR SUBCATEGORIA = SELECTEDVALUE(mavi_produto[sub_categoria])
+			VAR SEGMENTO = SELECTEDVALUE(mavi_produto[segmento])
+			VAR SUBSEGMENTO = SELECTEDVALUE(mavi_produto[sub_segmento])
+			VAR RANGE = SELECTEDVALUE(mavi_produto[tamanho_range])
+			VAR TIER = SELECTEDVALUE(mavi_produto[desc_c])
+			
+			
+			VAR TT_VALOR = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_VAL_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR TT_QTD = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_QTD_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR MEDIO = CALCULATE(([MEDIA_ANO_2_VAL_M]/TT_VALOR*Valores)+([MEDIA_ANO_2_QTD_M]/TT_QTD*QTds))
+			
+			
+			VAR TBResumo = 
+			CALCULATETABLE(
+			    SUMMARIZE(
+			        ALLSELECTED(mavi_prod_lj),
+			        mavi_produto[Concat_ean_nome],
+			        "TOTAL", CALCULATE(
+			        ([MEDIA_ANO_2_VAL_M]/TT_VALOR*Valores)+([MEDIA_ANO_2_QTD_M]/TT_QTD*QTds),
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER
+			    )
+			    ),
+			        ALL(mavi_produto)
+			)
+			VAR ACUMULANDO = 
+			    CALCULATE(SUMX(
+			        FILTER(TBResumo, [TOTAL] >= MEDIO),[TOTAL]
+			    ))
+			
+			RETURN
+			ACUMULANDO
+			```
+		lineageTag: d13c549f-4132-49b6-9d14-f8d4d65bef1e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Top_80_segmento_M =
+			SWITCH(TRUE(),
+			[TESTE_PARET_SEGMENTO_M] <= 0.8, "TOP 80",
+			[TESTE_PARET_SEGMENTO_M] > 0.8, "BOT 20")
+		lineageTag: 56110ca7-aeef-4d8e-bc39-778c62cbdc65
+
+	measure Top_50_SEGMENTO_M =
+			SWITCH(TRUE(),
+			[TESTE_PARET_SEGMENTO_M] <= 0.5, "TOP 50",
+			[TESTE_PARET_SEGMENTO_M] <= 0.7, "TOP 70",
+			[TESTE_PARET_SEGMENTO_M] <= 0.9, "TOP 90",
+			"BOT 10")
+		lineageTag: 2fc78d91-4c51-4f09-a32b-9445b8cd2cac
+
+	measure valor_m = CALCULATE(CALCULATE(SUM(mavi_prod_lj[valor]),FILTER(mavi_loja, mavi_loja[cluster_1] = "MERCADO")), ALL( mavi_varejista), ALL(mavi_loja))
+		lineageTag: 9592151f-33be-49c2-af56-eed6d628611a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure IS_MANTER_M = ```
+			SWITCH(TRUE(),
+			([Top_80_segmento_M] = "TOP 80"), "MANTER", 
+			([Top_80_segmento_M] = "BOT 20") && [VARIACAO_FAIR_SHARE_M] > 0, "MANTER","REVISAR"
+			)
+			```
+		lineageTag: 4827e31c-63bc-40a9-8abe-470a50de5f7f
+
+	measure VARIACAO_FAIR_SHARE_M =
+			
+			--------------------------------------------------
+			VAR Valores = [ESCALA_FAIR_SHARE]
+			VAR QTds =  1 - Valores
+			--------------------------------------------------
+			return
+			CALCULATE((DIVIDE([MEDIA_ANO_2_VAL_M],[MEDIA_ANO_1_VAL_M])-1)*Valores)+CALCULATE((DIVIDE([MEDIA_ANO_2_QTD_M],[MEDIA_ANO_1_QTD_M])-1)*QTds)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c85e45a1-06c0-4037-9a3b-e58e2e3b7fcc
+
+	measure CONTRIBUICAO_FAIR_SHARE_M = ```
+			
+			--------------------------------------------------
+			VAR Valores = [ESCALA_FAIR_SHARE]
+			VAR QTds =  1 - Valores
+			--------------------------------------------------
+			VAR SUBCATEGORIA = SELECTEDVALUE(mavi_produto[sub_categoria])
+			
+			VAR TT_VALOR = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_1_VAL_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        REMOVEFILTERS(mavi_produto),REMOVEFILTERS(mavi_produto)
+			    )
+			VAR VALOR = 
+			    CALCULATE(
+			        [MEDIA_ANO_2_VAL_M] - [MEDIA_ANO_1_VAL_M]
+			    )
+			VAR TT_QTD = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_1_QTD_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        REMOVEFILTERS(mavi_produto),REMOVEFILTERS(mavi_produto)
+			    )
+			VAR SQTD = 
+			    CALCULATE(
+			        [MEDIA_ANO_2_QTD_M] - [MEDIA_ANO_1_QTD_M]
+			    )
+			VAR MEDIO = (VALOR/TT_VALOR*Valores)+(SQTD/TT_QTD*QTds)
+			
+			RETURN
+			MEDIO
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1299bcf8-9543-494d-9c52-5f9d059ad4c2
+
+	measure 'TESSTE DATA' = DATE(YEAR(MAX('PERIODO B'[data b])), MONTH(MAX('PERIODO B'[data b]))-12,01)
+		formatString: General Date
+		displayFolder: TEMPO
+		lineageTag: e0690524-a2bc-437b-893e-d9db33fd1799
+
+	measure PRECO_MEDIO_ANO_2_M = [MEDIA_ANO_2_VAL_M]/[MEDIA_ANO_2_QTD_M]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 170292ec-80b1-4ed4-801c-d91f7de85b7e
+
+	measure PRECO_MEDIO_SUBCATEGORIA_M = ```
+			
+			
+			VAR SUBCATEGORIA = SELECTEDVALUE(mavi_produto[sub_categoria])
+			VAR SEGMENTO = SELECTEDVALUE(mavi_produto[segmento])
+			VAR SUBSEGMENTO = SELECTEDVALUE(mavi_produto[sub_segmento])
+			VAR RANGE = SELECTEDVALUE(mavi_produto[tamanho_range])
+			VAR TIER = SELECTEDVALUE(mavi_produto[desc_c])
+			
+			VAR TT_VALOR = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_VAL_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER,
+			        ALL(mavi_produto[Concat_ean_nome])
+			    )
+			VAR TT_QTD = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_QTD_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        mavi_produto[segmento] = SEGMENTO,
+			        mavi_produto[sub_segmento] = SUBSEGMENTO,
+			        mavi_produto[tamanho_range] = RANGE,
+			        mavi_produto[desc_c] = TIER,
+			        ALL(mavi_produto[Concat_ean_nome])
+			    )
+			VAR MEDIO = TT_VALOR/TT_QTD
+			
+			RETURN
+			MEDIO
+			
+			```
+		lineageTag: ba0a85d5-1773-4997-8055-85e9848c54c7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Mes_12_M =
+			
+			CALCULATE(CALCULATE(DISTINCTCOUNT(mavi_prod_lj[mes]), DATESINPERIOD(mavi_prod_lj[dia], MAX('PERIODO B'[data b]), -12, MONTH),FILTER(mavi_loja, mavi_loja[cluster_1] = "MERCADO")), ALL( mavi_varejista), ALL(mavi_loja))
+		formatString: 0
+		lineageTag: 4cd549d6-ba24-4221-b3fc-3f781f8f7ac5
+
+	measure Mes_6_M =
+			
+			CALCULATE(CALCULATE(DISTINCTCOUNT(mavi_prod_lj[mes]), DATESINPERIOD(mavi_prod_lj[dia], MAX('PERIODO B'[data b]), -6, MONTH),FILTER(mavi_loja, mavi_loja[cluster_1] = "MERCADO")), ALL( mavi_varejista), ALL(mavi_loja))
+		formatString: 0
+		lineageTag: 043f0381-28f5-4a03-a5a9-caceaaae2f02
+
+	measure Mes_3_M =
+			
+			CALCULATE(CALCULATE(DISTINCTCOUNT(mavi_prod_lj[mes]), DATESINPERIOD(mavi_prod_lj[dia], MAX('PERIODO B'[data b]), -3, MONTH),FILTER(mavi_loja, mavi_loja[cluster_1] = "MERCADO")), ALL( mavi_varejista), ALL(mavi_loja))
+		formatString: 0
+		lineageTag: 9c352da4-4bf8-40a4-91b4-8b1389f5d3a2
+
+	measure Ruptura_M = ```
+			
+			SWITCH(TRUE(),
+			[Mes_3_M] = BLANK(), "RUPTURA",
+			AND(AND([Mes_6_M]<=3,CALCULATE([Mes_6_M]=[Mes_12_M])),[Mes_3]<=3), "INOVACAO",
+			"REGULAR")
+			
+			```
+		lineageTag: 170e5162-37c5-4469-8a92-e2924de39cb4
+
+	measure PARTICIPAÇAO_SUBCATEGORIA_M = ```
+			
+			
+			--------------------------------------------------
+			VAR Valores = [ESCALA_FAIR_SHARE]
+			VAR QTds =  1 - Valores
+			--------------------------------------------------
+			
+			VAR SUBCATEGORIA = SELECTEDVALUE(mavi_produto[sub_categoria])
+			
+			
+			VAR TT_VALOR = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_VAL_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR TT_QTD = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_QTD_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR MEDIO = ([MEDIA_ANO_2_VAL_M]/TT_VALOR*Valores)+([MEDIA_ANO_2_QTD_M]/TT_QTD*QTds)
+			
+			RETURN
+			MEDIO
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 92d6b3dd-2d09-4209-8d89-e3240d7d4fea
+
+	measure RANK_M = ```
+			
+			--------------------------------------------------
+			VAR Valores = [ESCALA_FAIR_SHARE]
+			VAR QTds =  1 - Valores
+			--------------------------------------------------
+			VAR SUBCATEGORIA = SELECTEDVALUE(mavi_produto[sub_categoria])
+			
+			
+			VAR TT_VALOR = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_VAL_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR TT_QTD = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_QTD_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			RETURN 
+			    RANKX(
+			        ALL(mavi_produto), 
+			        CALCULATE(
+			            CALCULATE([MEDIA_ANO_2_VAL_M]/TT_VALOR*Valores+[MEDIA_ANO_2_QTD_M]/TT_QTD*QTds), 
+			            mavi_produto[sub_categoria] = SUBCATEGORIA
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: ce62a37f-4088-4fa1-9988-4b711b4e6494
+
+	measure 'TEORIA PARETO_M' = ```
+			
+			--------------------------------------------------
+			VAR Valores = [ESCALA_FAIR_SHARE]
+			VAR QTds =  1 - Valores
+			--------------------------------------------------
+			
+			VAR SUBCATEGORIA = SELECTEDVALUE(mavi_produto[sub_categoria])
+			
+			
+			VAR TT_VALOR = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_VAL_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR TT_QTD = 
+			    CALCULATE(
+			        SUMX(mavi_produto,[MEDIA_ANO_2_QTD_M]), 
+			        mavi_produto[sub_categoria] = SUBCATEGORIA,
+			        REMOVEFILTERS(mavi_produto)
+			    )
+			
+			VAR MEDIO = CALCULATE(([MEDIA_ANO_2_VAL_M]/TT_VALOR*Valores)+([MEDIA_ANO_2_QTD_M]/TT_QTD*QTds))
+			
+			
+			VAR TBResumo = 
+			CALCULATETABLE(
+			    SUMMARIZE(
+			        ALLSELECTED(mavi_prod_lj),
+			        mavi_produto[Concat_ean_nome],
+			        "TOTAL", CALCULATE(
+			        ([MEDIA_ANO_2_VAL_M]/TT_VALOR*Valores)+([MEDIA_ANO_2_QTD_M]/TT_QTD*QTds),
+			        mavi_produto[sub_categoria] = SUBCATEGORIA
+			    )
+			    ), ALL(mavi_produto)
+			)
+			VAR ACUMULANDO = 
+			    CALCULATE(SUMX(
+			        FILTER(TBResumo, [TOTAL] >= MEDIO),[TOTAL]
+			    ))
+			
+			RETURN
+			ACUMULANDO
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9b37818e-198a-4ebd-b6b6-b9510c7ef418
+
+	measure Top_80_M =
+			SWITCH(TRUE(),
+			[TEORIA PARETO_M] <= 0.8, "TOP 80",
+			[TEORIA PARETO_M] > 0.8, "BOT 20")
+		lineageTag: 519b8425-6bbe-4334-a639-ad05bdc1c978
+
+	column Column
+		formatString: 0
+		lineageTag: c9ccdf9c-9c74-4193-8a20-fd774e99b869
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _MASCARA_FORMULAS_MERCADO = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = c944d110cfec4036a60c0f2cf0534d52
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+
